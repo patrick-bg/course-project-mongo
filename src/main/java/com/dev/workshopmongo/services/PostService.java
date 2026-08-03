@@ -9,6 +9,7 @@ import com.dev.workshopmongo.services.exception.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,6 +26,12 @@ public class PostService {
 
     public List<Post> findByTitle(String text){
         return repo.findbyTitle(text);
+    }
+
+    public List<Post> completeSearch(String text, Date minDate, Date maxDate) {
+        // Added 24 hours to the query, as the method returns the start of the maxDate.
+        maxDate = new Date(maxDate.getTime() + 24 * 60 * 60 * 1000);
+        return repo.completeSearch(text, minDate, maxDate);
     }
 
 }
